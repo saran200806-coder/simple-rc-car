@@ -1,20 +1,27 @@
 # Simple RC Car
 
-A beginner-friendly remote-control car project using an Arduino, two DC motors, and an L298N motor driver. Supports joystick control (analog) and optional Bluetooth control (HC-05/HC-06).
+A beginner-friendly remote-control car project. This update improves control logic, adds obstacle detection (ultrasonic HC-SR04), supports ESP32 (Wi‑Fi/Bluetooth), and includes a minimal Android Bluetooth app to control the car from a smartphone.
 
-Features
-- Forward / Reverse / Left / Right via joystick or Bluetooth
-- PWM speed control
-- Simple wiring and BOM for beginners
+Highlights
+- Improved motor ramping and mixing for smoother driving
+- Obstacle detection with HC-SR04 (stops and backs up when obstacle detected)
+- ESP32 sketch using Bluetooth SPP (BluetoothSerial) for phone control and Wi‑Fi placeholders
+- Minimal Android app (Kotlin) that discovers paired Bluetooth devices and sends simple commands
 
-Repository layout
-- README.md - Overview and quick start
-- hardware/wiring.md - Wiring and pin mapping
-- components.md - Bill of materials (BOM)
-- src/RC_Car.ino - Arduino sketch supporting joystick and Bluetooth
+Repository layout (added files)
+- src/RC_Car_ESP32.ino - ESP32-compatible sketch with ultrasonic sensor and BT control
+- mobile/android/ - Minimal Android app (Kotlin) to connect/send commands
+- hardware/wiring.md - updated with ESP32 wiring and ultrasonic wiring
+- components.md - updated BOM
 
-Quick start
-1. Assemble motors and motor driver following wiring.md.
-2. Upload src/RC_Car.ino to your Arduino Uno/Nano.
-3. Use a 2-axis analog joystick connected to A0/A1 for steering and throttle, or pair a phone via a Bluetooth serial terminal app to the HC-05/HC-06 module.
+Quick start (ESP32 + Bluetooth)
+1. Flash `src/RC_Car_ESP32.ino` to an ESP32 (e.g., ESP32 DevKitC).
+2. Wire motors, L298N, HC-SR04, and power per `hardware/wiring.md`.
+3. Pair your phone with the ESP32 Bluetooth (it appears as the module name specified in the sketch).
+4. Open the Android app, connect to the ESP32, and use the buttons or joystick UI to drive.
+
+If you want, I can now:
+- polish the Android app UI and add a joystick control
+- add a web-based controller using ESP32 Wi‑Fi (WebSocket or HTTP endpoints)
+- add motor encoder support for closed-loop speed control
 

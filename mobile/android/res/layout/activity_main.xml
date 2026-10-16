@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <Button
+        android:id="@+id/btn_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Scan Paired Devices" />
+
+    <ListView
+        android:id="@+id/list_devices"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <Button android:id="@+id/btn_forward" android:text="Forward" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <Button android:id="@+id/btn_left" android:text="Left" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <Button android:id="@+id/btn_stop" android:text="Stop" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <Button android:id="@+id/btn_right" android:text="Right" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <Button android:id="@+id/btn_back" android:text="Back" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>

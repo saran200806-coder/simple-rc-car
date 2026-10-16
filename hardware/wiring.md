@@ -1,45 +1,35 @@
-# Wiring and Pin Mapping
+# Wiring and Pin Mapping (ESP32 additions)
 
-This file describes the wiring for a basic 2-wheel differential RC car using an L298N motor driver and an Arduino Uno/Nano.
+This supplements the earlier wiring for Arduino. When using an ESP32 DevKitC, use the following suggestions.
 
-Components and suggested pins
-- Arduino Uno/Nano
-- L298N motor driver
-- 2x DC motors (left and right)
-- Joystick (2-axis analog)
-- Optional: HC-05 / HC-06 Bluetooth module
-- Battery pack (7.4V Li-ion or 6V-12V battery depending on motors)
+ESP32 pin suggestions (change as needed for your board):
 
-Recommended pin connections (in the Arduino sketch `src/RC_Car.ino`):
+Motor driver (L298N) to ESP32
+- ENA (motor A PWM) -> ESP32 GPIO 18 (PWM channel 0)
+- IN1 -> ESP32 GPIO 14
+- IN2 -> ESP32 GPIO 27
 
-Motor driver (L298N) to Arduino
-- ENA (motor A PWM) -> Arduino D5 (PWM)
-- IN1 -> Arduino D8
-- IN2 -> Arduino D9
+- ENB (motor B PWM) -> ESP32 GPIO 19 (PWM channel 1)
+- IN3 -> ESP32 GPIO 26
+- IN4 -> ESP32 GPIO 25
 
-- ENB (motor B PWM) -> Arduino D6 (PWM)
-- IN3 -> Arduino D10
-- IN4 -> Arduino D11
+Ultrasonic sensor (HC-SR04)
+- TRIG -> ESP32 GPIO 13
+- ECHO -> ESP32 GPIO 12
 
-Joystick
-- VRx -> A0 (JOY_X)
-- VRy -> A1 (JOY_Y)
-- SW (button) optional -> D7
+Joystick (optional)
+- VRx -> ESP32 GPIO 32 (ADC1)
+- VRy -> ESP32 GPIO 33 (ADC1)
+- SW -> ESP32 GPIO 15 (optional)
 
-Bluetooth (HC-05/HC-06)
-- HC-05 TX -> Arduino D2 (SoftwareSerial RX)
-- HC-05 RX -> Arduino D3 (SoftwareSerial TX) -- be careful with voltage levels; HC-05 RX expects 3.3V signals. Use a voltage divider on Arduino TX.
-- HC-05 VCC -> 5V
-- HC-05 GND -> GND
+Bluetooth
+- The sketch uses the ESP32 Bluetooth SPP via the BluetoothSerial library. No external BT module is required when using ESP32.
 
 Power
-- Motor power (12V or battery pack) -> L298N +12V (VMOT)
-- L298N GND -> Arduino GND (common ground)
-- L298N 5V logic: many L298N boards have an onboard 5V regulator; you can use the onboard 5V to power Arduino if appropriate, but
-  it's safer to power Arduino from USB or a separate 5V regulator. Ensure all grounds are common.
+- Motors: motor battery -> L298N VMOT
+- ESP32: 5V (via USB) or regulated 5V -> 5V pin
+- Common ground required between motor battery, L298N, and ESP32
 
-Safety notes
-- Check motor stall currents and ensure the motor driver can handle them.
-- Provide decoupling capacitors on motor power or use an RC filter to reduce noise.
-- If you use a Li-ion battery, follow safe charging and protection practices.
-
+Notes
+- The L298N is power-hungry and inefficient; for higher-current motors prefer an H-bridge like the TB6612FNG, VNH2SP30, or a motor driver with MOSFETs.
+- The ESP32's 3.3V IO is native; ensure motor driver logic is compatible.
